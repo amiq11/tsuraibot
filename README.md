@@ -35,3 +35,7 @@ ssh越しに、サーバ上でバックグラウンドで動作させたい場�
   twitterのoauthでaccess_tokenを簡単に得ることができ、それを保存出来るようにしてみました。
 * tsuraibot.rb  
   userstreamからpostを取得し、つらいものを抜き取ってsqliteで保存してみました。
+
+SpecialThanks
+-------------
+[Stream API を使った twitterbotの設置メモ[Ruby]](http://nyannya-n.tumblr.com/post/42504403441/stream-api-twitterbot-ruby) をめっちゃ参考にさせてもらいました。@symmetrizer さんありがとうございます。
