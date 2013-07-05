@@ -11,8 +11,8 @@ require 'thread'
 require './twauth'
 
 class TsuraiBot
-    CONSUMER_KEY       = "YourKey"
-    CONSUMER_SECRET    = "YourSecretKey"
+  CONSUMER_KEY       = "YourKey"
+  CONSUMER_SECRET    = "YourSecretKey"
 
   #botのTwitterID
   MY_SCREEN_NAME = "tsuraibot"
@@ -33,13 +33,13 @@ class TsuraiBot
     t_stream = Thread.new { stream }
     t_twit = Thread.new {
       loop do
+        sleep 30*60
         begin
           t = get_db_randomly "tsurai"
           post t[0][0]
         rescue
           puts "#{$!}"
         end
-        sleep 60*60
       end
     }
     t_flush = Thread.new {
@@ -170,10 +170,8 @@ class TsuraiBot
     begin
       puts "open #{table}"
       db = SQLite3::Database.new( @dbfile )
-      db.execute( "
-INSERT INTO #{table}
-        ( twitid, text, name, screen_name, date )
- VALUES ( #{msg['id']}, '#{msg['text']}', '#{msg['user']['name']}', '#{msg['user']['screen_name']}', '#{msg['created_at']}' );")
+      db.execute( "INSERT INTO #{table} ( twitid, text, name, screen_name, date ) VALUES ( ?,?,?,?,? );",
+                 msg['id'], msg['text'], msg['user']['name'], msg['user']['screen_name'], msg['created_at'] )
       db.close
       puts "saved: ( #{msg['id']}, '#{msg['text']}', '#{msg['user']['name']}', '#{msg['user']['screen_name']}', '#{msg['created_at']}' )"
     rescue SQLite3::SQLException
