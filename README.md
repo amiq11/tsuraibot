@@ -39,3 +39,11 @@ ssh越しに、サーバ上でバックグラウンドで動作させたい場�
 SpecialThanks
 -------------
 [Stream API を使った twitterbotの設置メモ[Ruby]](http://nyannya-n.tumblr.com/post/42504403441/stream-api-twitterbot-ruby) をめっちゃ参考にさせてもらいました。@symmetrizer さんありがとうございます。
+
+更新履歴
+--------
+# 2013-07-05
+SQL injectionされないようにdb.executeした。(シンボル変数の利用)
+# 2013-07-03
+公開
+
