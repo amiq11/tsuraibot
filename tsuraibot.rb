@@ -11,8 +11,10 @@ require 'thread'
 require './twauth'
 
 class TsuraiBot
-  CONSUMER_KEY       = "YourKey"
-  CONSUMER_SECRET    = "YourSecretKey"
+  CONSUMER_KEY       = "OcIi8Hb0DSGuMzjl0YzrxA"
+  CONSUMER_SECRET    = "LdFP2lTALoXyZe5F6QH0pH1AyvjbZZ71tjzlR42aU"
+#   CONSUMER_KEY       = "YourKey"
+#   CONSUMER_SECRET    = "YourSecretKey"
 
   #botのTwitterID
   MY_SCREEN_NAME = "tsuraibot"
@@ -76,13 +78,13 @@ class TsuraiBot
   def find_save msg
     if msg['user']
       if msg['user']['screen_name'] != MY_SCREEN_NAME
-        find( "つらい", msg )     { |m| save_twit( "tsurai", m ) } or
-          find( "つらみ", msg )     { |m| save_twit( "tsurai", m ) } or
-          find( "しにたみ", msg )   { |m| save_twit( "tsurai", m ) } or
-          find( "死にたみ", msg )   { |m| save_twit( "tsurai", m ) } or
-          find( "ﾀﾉﾁｰ", msg )      { |m| save_twit( "tsurai", m ) } or
-          find( "タノチー", msg )   { |m| save_twit( "tsurai", m ) } or
-          find( "たのちー", msg )   { |m| save_twit( "tsurai", m ) }
+        find( "つらい", msg )     { |m| save_twit( "tsurai", m )   if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
+          find( "つらみ", msg )     { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
+          find( "しにたみ", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
+          find( "死にたみ", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
+          find( "ﾀﾉﾁｰ", msg )      { |m| save_twit( "tsurai", m )  if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
+          find( "タノチー", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
+          find( "たのちー", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) }
       end
     end
   end
