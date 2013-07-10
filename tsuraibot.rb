@@ -11,10 +11,8 @@ require 'thread'
 require './twauth'
 
 class TsuraiBot
-  CONSUMER_KEY       = "OcIi8Hb0DSGuMzjl0YzrxA"
-  CONSUMER_SECRET    = "LdFP2lTALoXyZe5F6QH0pH1AyvjbZZ71tjzlR42aU"
-#   CONSUMER_KEY       = "YourKey"
-#   CONSUMER_SECRET    = "YourSecretKey"
+   CONSUMER_KEY       = "YourKey"
+   CONSUMER_SECRET    = "YourSecretKey"
 
   #botのTwitterID
   MY_SCREEN_NAME = "tsuraibot"
