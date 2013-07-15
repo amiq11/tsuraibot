@@ -193,7 +193,8 @@ CREATE TABLE #{table} (
   def get_db_randomly table
     begin
       db = SQLite3::Database.new( @dbfile )
-      twit = db.execute( "SELECT text, name, screen_name FROM #{table} ORDER BY RANDOM() LIMIT 1;" )
+#       twit = db.execute( "SELECT text, name, screen_name FROM #{table} ORDER BY RANDOM() LIMIT 1;" )
+      twit = db.execute( "SELECT text, name, screen_name FROM #{table} as tbl, ( SELECT id FROM tsurai ORDER BY RANDOM() LIMIT 1 ) AS random WHERE tbl.id == random.id;" ) # こっちのほうがクエリの取得が早いみたい。
       db.close
       twit
     rescue
