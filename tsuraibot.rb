@@ -23,6 +23,13 @@ class TsuraiBot
   # データ保存先ファイル名 -- sqlite3で保存
   DBFILENAME = "tsuraibot.dat"
 
+  # 検索ワード
+  WORDLIST =
+    [ "つらい","つらみ","しにた","死に","ﾀﾉﾁｰ",
+    "タノチー","そつろん","卒論","レポート","ﾚﾎﾟｯﾖ",
+    "吐きそ","はきそ","死ぬ","死に","しんど",
+    "帰りた","もうやだ","たのちー" ]
+
   def initialize
     @auth = TWAuth.new( CONSUMER_KEY, CONSUMER_SECRET, DBFILENAME )
     @tsuraiq = Queue.new
@@ -76,13 +83,12 @@ class TsuraiBot
   def find_save msg
     if msg['user']
       if msg['user']['screen_name'] != MY_SCREEN_NAME
-        find( "つらい", msg )     { |m| save_twit( "tsurai", m )   if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
-          find( "つらみ", msg )     { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
-          find( "しにたみ", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
-          find( "死にたみ", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
-          find( "ﾀﾉﾁｰ", msg )      { |m| save_twit( "tsurai", m )  if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
-          find( "タノチー", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) } or
-          find( "たのちー", msg )   { |m| save_twit( "tsurai", m ) if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] ) }
+        for w in WORDLIST
+          break if find( w, msg ) { |m|
+            save_twit( "tsurai", m )   if !( /^RT @#{MY_SCREEN_NAME}/ =~ m['text'] )
+            favorite m
+          }
+        end
       end
     end
   end
@@ -157,6 +163,18 @@ class TsuraiBot
       puts "Post ( #{text} ) is failed: #{ret}"
     else
       puts "success update! :: #{text}"
+    end
+  end
+
+  def favorite msg
+    return unless msg['text']
+    param={}
+    param[ :id ] = msg[ 'id' ]
+    ret = @auth.token.post('/1.1/favorites/create.json', param )
+    if ret.class != Net::HTTPOK
+      puts "Favorite ( #{msg['text']} ) is failed: #{ret}"
+    else
+      puts "success favorite! :: #{msg['text']}"
     end
   end
 
